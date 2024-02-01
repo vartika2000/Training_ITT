@@ -7,7 +7,7 @@ docker tag dotnet-minikube-demo netacr.azurecr.io/dotnet-minikube-demo:new
 docker push netacr.azurecr.io/dotnet-minikube-demo:new
 
 -create a secret
-kubectl create secret docker-registry my-acr-secret --docker-server=netacr.azurecr.io --docker-username=netacr --docker-password=PzpKiVf+O+xXCxwCgf890vRagGN5DaaCZdEJE1bmaq+ACRAjcDXd --docker-email=netacr@azurecr.io
+kubectl create secret docker-registry ##write full command with secret
 
 -deployment.yml
 
