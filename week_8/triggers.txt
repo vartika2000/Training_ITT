@@ -1,0 +1,53 @@
+#Create Webhook and different job triggers implementation
+
+** for webhook trigger
+
+*name - webhhook
+*freestyle
+*source code management - git
+repository url- https://github.com/vartika2000/assignment.git
+branch specifier - */main
+*build trigger - github hook trigger for gitscm polling
+
+*in git i added webhhok
+ 
+https://4022-122-181-90-149.ngrok-free.app/github-webhook/
+
+when i made any changes i git repository trigger is working automatically
+
+*trigger builds remotely
+
+**name - remotely
+*freestyle
+*source code management - none
+*build trigger - trigger builds remotely
+  authentication token - mysecrettoken
+
+for trigger use link - http://localhost:8080/job/remotely/build?token=mysecrettoken
+
+
+**build periodically
+
+*item name-demo2
+*select free style
+*source code management - none
+*build triggers
+  build periodically
+    H/1 * * * *
+*build steps - execute windows batch command
+   echo hello world
+apply + save
+
+**poll SCM
+
+*item name-demo3
+*select free style
+*source code management - git
+repository url- https://github.com/vartika2000/assignment.git
+branch specifier - */main
+*build triggers
+  build periodically
+    H/1 * * * *
+*build steps - execute windows batch command
+   echo hello world
+apply + save

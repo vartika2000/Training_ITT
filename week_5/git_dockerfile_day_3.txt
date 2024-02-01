@@ -1,0 +1,19 @@
+Create a docker image for installing GIT and push the image to the previously created azure container registry
+
+FROM ubuntu:latest
+
+MAINTAINER vartika <vartika.jain@intimetec.com>
+
+#Update package list and install GIT
+RUN apt-get update && apt-get install -y git
+
+CMD ["echo","git is installed sucessfully..."]
+
+command to build a docker image
+docker build -t registery1 -f dockerfile_new .
+
+tag the docker image 
+docker tag registery1 vartikajain/testrepo:1
+
+push to the docker private repository
+docker push vartikajain/testrepo:1

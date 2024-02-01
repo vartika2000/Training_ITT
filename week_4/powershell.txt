@@ -1,0 +1,35 @@
+Install Azure Powershell for current user
+
+
+Install-Module -Name Az -Scope CurrentUser -Repository PSGallery -Force
+
+
+Create any resource on the azure portal using PowerShell 
+
+Connect-AzAccount
+
+
+ Get-AzSubscription
+
+Name       Id                                   TenantId                             State
+----       --                                   --------                             -----
+Free Trial 8183e8a6-068d-4b4f-baca-d240378562c0 4571896a-0a46-4e05-9394-2cd94af8cf26 Enabled
+
+
+PS C:\Users\Vartika.Jain> Set-AzContext -SubscriptionId 8183e8a6-068d-4b4f-baca-d240378562c0
+
+Name                                     Account             SubscriptionName    Environment         TenantId
+----                                     -------             ----------------    -----------         --------
+Free Trial (8183e8a6-068d-4b4f-baca-d... priyanshujain191... Free Trial          AzureCloud          4571896a-0a46-4...
+
+
+PS C:\Users\Vartika.Jain> $resourceGroupName = "powertry"
+>> $location = "eastus"
+PS C:\Users\Vartika.Jain> New-AzResourceGroup -Name $resourceGroupName -Location $location
+
+
+ResourceGroupName : powertry
+Location          : eastus
+ProvisioningState : Succeeded
+Tags              :
+ResourceId        : /subscriptions/8183e8a6-068d-4b4f-baca-d240378562c0/resourceGroups/powertry

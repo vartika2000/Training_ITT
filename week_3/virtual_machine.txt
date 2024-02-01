@@ -1,0 +1,17 @@
+Create an azure virtual machine (Linux/Windows) using azure portal
+
+
+1.In the search box, type "Virtual Machine" and select "Virtual machine" from the suggested list.
+2. Click on the "Create" button on the Virtual machine blade.
+
+3. Provide a name for your virtual machine.i.e iitvm
+4. Choose an appropriate resource group or create a new one.i.e resourcegroup
+5. Select the desired region/location where your VM will be deployed.i.e central india
+6. Choose Windows VM by selecting the respective operating system image.
+7. Choose the appropriate size for your VM based on your requirements.
+8. Provide a username and password for the administrator account.
+9. Enable/disable the required boot diagnostics option.
+10. On the networking page do not change any thing set default.
+10.click create and review
+11.click create 
+

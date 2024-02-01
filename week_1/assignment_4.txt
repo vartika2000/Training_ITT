@@ -1,0 +1,16 @@
+Setup git into Visual studio code and push sample code to the repository using VS Code. 
+ 
+
+Create a document including the steps to work with GIT using VS Code UI 
+
+
+*Firstly i siging in github
+*I created a repository with assignment_3 
+*In VS Code I download the extension github. 
+*I created a file that i have to push to the repository.
+*then following steps i used for intialize, add, commit, remote and push the repository. 
+   git init = for initilization 
+   git add . = for add file to staging area
+   git commit -m " " = for commit
+   git remote origin <ulr> = for remote
+   git push = for push the file 

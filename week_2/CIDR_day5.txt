@@ -1,0 +1,10 @@
+Write the IP address 135.1.1.25 mask 255.255. 248.0 in CIDR notation
+
+* convret the subnet mask into binary 
+   255.255.248.0 - 11111111.11111111.11111000.00000000
+
+* count 1  i.e 21
+
+* add 21 with slash(/) to write ip in CIDR notation 
+  
+            135.1.1.25/21

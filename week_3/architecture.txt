@@ -1,0 +1,98 @@
+Implementation of below architecture manually using portal
+
+
+1. Create a Resource Group
+
+Step 1: Sign in to the Azure portal and select the subscription type
+
+Step 2: Navigate to the Resource groups option on the Azure services or search Resource groups in the search and click the icon
+
+Step 3: Click on the +Create button on the top
+
+Step 4:- Enter the details like name subscription and region
+
+Step 5: Click <Review + Create> button resource group would be created in a while
+
+. Create a Webapp service
+
+Step 1: Click on the +Create button on the top in the Resource Group
+
+Step 2: Search the Web app and select the icon
+
+Step 3: Click on the Create button
+
+Step 4:- Enter the details in the Basic section -Subscription type and Resouce group -Name and Publish ( Code / Docker Container / Static Web App) -Runtime Stack, 05, and Region -(defaults in Deployment, Networking, monitoring)
+
+-Pricing plan
+
+Step 5:- Click on <Review Create> button
+
+Adding an Azure AD Authentication on the web app
+
+Step 6: Navigate to the Authentication option in the Settings
+
+Step 7: Click on Add Identity Providers button
+
+Step 8:- Select the details
+
+-Identity provider
+
+-Registration Type and Name -Supported Account Types
+
+-Restrict Access
+
+-Unauthenticated Requests
+
+Step 9:- Click on Add button
+
+the Authentication will be added
+
+3. Creating a SQL Server and databases
+
+Step 1: Search for SQL Database and click the icon 
+
+Step 2: Click on Create button
+
+Step 3:-Enter the Details
+
+-Subscription and Resource Group Name
+
+-Database name
+
+-Server (Select the previously created server name or can create a new one )
+
+Steps to create a new server -Click on Create New server -Enter name, location, and Authentication method
+
+-click on <Create>:
+
+a SQL database will be created
+
+4. Creating a Blob storage for creating blob storage we will need a storage account and a container Steps to create a storage account
+
+Step 1: Search for the Storage account and click on <Create>
+
+Step 2: Enter details
+
+-Subscription and Resource group -Instance details (Name, Region, Performance)
+
+-Rest defaults
+
+Step 3: Click on <Review> and then <Create>
+
+now navigate to the newly made storage account for creating a blob in the container
+
+Step 4: In the Data Storage select containers
+
+Step 5: Click on <+Container> button enter name and access level
+
+Step 6: Click on <Create> button
+
+Step 7: Click on the container select <Upload> button
+
+Step 8:- Drag the file or browse the file to be added to the blob
+
+can change the settings in advance section for(blob type size, Access tier and encryption)
+
+Step 9:- Click on Upload
+
+the file will be uploaded in the blob

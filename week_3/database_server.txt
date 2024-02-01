@@ -1,0 +1,32 @@
+
+Create a sql server and Database. Configure AD login for the database.
+
+
+
+1.In the search bar, type "SQL Server" and select "SQL Server - Azure SQL".
+2.Click on the "Create" button on the SQL Server overview page.
+3.Fill in the required details for the SQL Server:
+*Resource group: Create a new one or select an existing resource group.ie MyRs
+*Server name: Enter a name for your SQL Server.i.vartikasql
+*location : (US) East US
+*Authentication method : Use only Azure Active Directory (Azure AD) authentication
+*Set Azure AD admin : Set admin i.e test1
+
+4.Click on the "Review + create" button to review your configuration.
+5.After reviewing, click on the "Create" button 
+
+For sql database
+
+1.In the search bar, type "Azure SQL Database" and select "Azure SQL Database" from the results.
+2.Click on the "Create" button on the Azure SQL Database overview page.
+3.Fill in the required details for the database:
+*Resource group: Create a new one or select an existing resource group.i.e MyRs
+*Database name: Enter a unique name for your database.mydb
+*Server: Select an existing SQL server or create a new one.i.e vartikasql
+*Want to use SQL elastic pool: Choose "No".
+*Compute + storage: Configure the desired performance level and storage options.
+*Collation: Select the appropriate collation for your database.
+*Allow Azure services to access server: Choose "Yes" if you want to allow access from other Azure services.
+
+4.Click on the "Review + create" button to review your configuration.
+5.After reviewing, click on the "Create" button to create the SQL database.

@@ -1,0 +1,31 @@
+# Create RBAC roles for new users and limit the access
+
+*manage roles
+
+ golbal role 
+  role to add- employee
+   permission - read(overall),create,delete,read(view)
+ item role
+  roles to add - developer
+  pattern - dev.*
+   permission - build,cancle,configure,create,delete,move,read(job),create,delete,read(view)
+  
+  roles to add - developer
+  pattern - dev.*
+   permission - create,delete,read(job),create,delete,read(view)
+
+ save
+
+*assign role
+
+ global role 
+  admin - admin
+  developerdemo - employee
+  testerdemo - employee
+ 
+ item role
+  developerdemo - developer
+  testerdemo -  tester
+
+ save
+

@@ -1,0 +1,28 @@
+Create sprints, work items, PBI, and tasks on azure boards. 
+
+*Add a member to the organization with an appropriate access level so that he can access Azure Boards and Pipelines
+*Add a member to the organization and project with an appropriate access level so that he can access Azure Repos along with the above access.
+
+
+boards -> +new item(i.e demo) -> task( i.e create-webpage)
+backlog will be created automtically as every new item the product backlog(i.e demo Team Backlog).
+create a sprint
+
+board -> sprints -> new sprints
+ name - sprints-1
+ start date -8/25/2023  end date - 8/31/2023
+ location - demo
+
+
+Adding a Member to the Organization with Access to Azure Boards and Pipelines:
+
+- Organization settings -> users -> +new users(devxyz856@gmail.com)
+- for accessing Azure Boards and Azure Pipelines chooose stackholder
+- add
+
+
+Add a member to the organization and project with an appropriate access level so that he can access Azure Repos along with the above access.
+
+- add user(xyztest024@gmail.com)
+- add member to the project project settings -> teams(assignment)->add (xyztest024@gmail.com)
+- permission -> contributors -> members-> add 

@@ -1,0 +1,36 @@
+#Pipeline Job for deploying static website over apache server
+
+static_website-pipeline name
+
+
+github project- https://github.com/vartika-jain-ITT/jenkins.git/
+
+pipeline script
+
+pipeline {
+    agent any
+    
+    stages {
+        stage('Checkout') {
+            steps {
+                // Checkout code from Git
+                git branch: 'main', url: 'https://github.com/vartika-jain-ITT/jenkins.git'
+            }
+        }
+        
+        stage('Deploy') {
+            steps {
+                // Copy website files to Apache's DocumentRoot
+                script {
+                    def sourceDir = "${workspace}"  
+                    def targetDir = "C:\\Apache24\\htdocs"
+
+                    // Copy files using xcopy
+                    bat "xcopy /s /e /y /i \"${sourceDir}\\*\" \"${targetDir}\""
+                }
+            }
+        }
+    }
+}
+
+save 

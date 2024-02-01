@@ -1,0 +1,35 @@
+* Integrate SonarCloud security testing tool with CI/CD pipeline
+
+Solution:-
+
+Step 1:- Login to sonar cloud in the browser and select <analyze a new project>
+
+Step 2:- Click on import an organization and enter the details
+         -organization link, personal access token(with code read and write permission)
+         -select the plan
+
+Step 3:- Navigate to the Azure DevOps portal
+          - install SonarCloud extension from the marketplace
+
+Step 4:- Navigate to the project setting click on <service connection> 
+        -create a new service connection select sonar cloud 
+        -name, give the access token from sonar cloud 
+
+Step 5:- create pipeline
+        - select a source (azure repo git)
+        - repository (demo)
+        - branch (branch1)
+        - select .NET Core with SonarCloud
+        - tasks 
+           - restore
+           - prepare analysis on sonarcloud  
+              - Display name(azure-sonar)
+              - Organization(week9-azure-devops (week9-azure-devops))
+              - Project Key(week9-azure-devops_sonarexample)
+              - project name(sonarexample)
+           - build
+           - test
+           - run code analysis
+           - publish quality gate result
+      
+save + queue        

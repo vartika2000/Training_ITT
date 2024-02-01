@@ -1,0 +1,186 @@
+Deploy 2 static websites in 2 different VMs. Place them behind Application Gateway and configure path based routing to access the websites on different paths.
+(e.g. When user hits the Application gateway DNS with path /vm1 the request should reach VM1. Similarly /vm2 should redirect to VM2)
+
+
+
+1. create virtual network with 2 subnets one for application gateway and another for virtual machines i.e appgate
+2. create 2 virtual machine I have created windows virtual machine with name vm1 and vm2
+3. Install IIS server on both of the virtual machine. 
+4. To place application gateway in front of them follow the steps
+  - resource group i.e asspass1
+  - tier i.e standard
+  - instant count i.e 2
+  - virtual network i.e appgate
+     subnet i.e app-gate-subnet 
+
+  Frontend 
+    - frontend ip address i.e public
+    - public ip addresss i.e test-ip
+  
+  Backend pool 
+    - create 2 backend pool and connect each with one of the virtual machines 
+    - name vm1 and vm2
+    - target type virtual machine
+  configuration 
+     - rule name i.e vm1 and vm2
+     - listener create 2 listners for both vm1 and vm2
+           listener name listen
+           frontend ip public 
+           protocol HTTP
+           port 80
+           listner type basic
+           host name 
+     - Backend target
+           create backend target for both vm1 and vm2
+           backend setting name 
+           backend protocol HTTP 
+           backend port 80
+           create 2 path based rules vm1 and 2
+                 path 
+                 target
+       click add 
+
+
+*Deploy a Resource Group, VM using: 
+1.Azure Powershell
+2.ARM template
+
+
+1
+ To create resource group
+$New-AzResourceGroup -Name 'RG' -Location 'EastUS'
+
+New-AzVm `
+>>     -ResourceGroupName 'RG' `
+>>     -Name 'myVM' `
+>>     -Location 'East US' `
+>>     -VirtualNetworkName 'myVnet' `
+>>     -SubnetName 'mySubnet' `
+>>     -SecurityGroupName 'myNetworkSecurityGroup' `
+>>     -PublicIpAddressName 'myPublicIpAddress' `
+>>     -OpenPorts 80,3389
+
+
+
+2
+main template
+
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_simple_vm_name": {
+            "defaultValue": "simple-vm",
+            "type": "String"
+        },
+        "disks_simple_vm_disk1_e44af36d51aa4709ae9560dfe0c05249_externalid": {
+            "defaultValue": "/subscriptions/8183e8a6-068d-4b4f-baca-d240378562c0/resourceGroups/RG/providers/Microsoft.Compute/disks/simple-vm_disk1_e44af36d51aa4709ae9560dfe0c05249",
+            "type": "String"
+        },
+        "disks_simple_vm_disk2_13163fc200934c34aa5446c7a7999f9b_externalid": {
+            "defaultValue": "/subscriptions/8183e8a6-068d-4b4f-baca-d240378562c0/resourceGroups/RG/providers/Microsoft.Compute/disks/simple-vm_disk2_13163fc200934c34aa5446c7a7999f9b",
+            "type": "String"
+        },
+        "networkInterfaces_myVMNic_externalid": {
+            "defaultValue": "/subscriptions/8183e8a6-068d-4b4f-baca-d240378562c0/resourceGroups/RG/providers/Microsoft.Network/networkInterfaces/myVMNic",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2023-03-01",
+            "name": "[parameters('virtualMachines_simple_vm_name')]",
+            "location": "eastus",
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D2s_v5"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "publisher": "MicrosoftWindowsServer",
+                        "offer": "WindowsServer",
+                        "sku": "2022-datacenter-azure-edition",
+                        "version": "latest"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(parameters('virtualMachines_simple_vm_name'), '_disk1_e44af36d51aa4709ae9560dfe0c05249')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "StandardSSD_LRS",
+                            "id": "[parameters('disks_simple_vm_disk1_e44af36d51aa4709ae9560dfe0c05249_externalid')]"
+                        },
+                        "deleteOption": "Detach",
+                        "diskSizeGB": 127
+                    },
+                    "dataDisks": [
+                        {
+                            "lun": 0,
+                            "name": "[concat(parameters('virtualMachines_simple_vm_name'), '_disk2_13163fc200934c34aa5446c7a7999f9b')]",
+                            "createOption": "Empty",
+                            "caching": "None",
+                            "managedDisk": {
+                                "storageAccountType": "Premium_LRS",
+                                "id": "[parameters('disks_simple_vm_disk2_13163fc200934c34aa5446c7a7999f9b_externalid')]"
+                            },
+                            "deleteOption": "Detach",
+                            "diskSizeGB": 1023,
+                            "toBeDetached": false
+                        }
+                    ],
+                    "diskControllerType": "SCSI"
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_simple_vm_name')]",
+                    "adminUsername": "azureuser",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true,
+                        "patchSettings": {
+                            "patchMode": "AutomaticByOS",
+                            "assessmentMode": "ImageDefault"
+                        },
+                        "enableVMAgentPlatformUpdates": false
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "securityProfile": {
+                    "uefiSettings": {
+                        "secureBootEnabled": true,
+                        "vTpmEnabled": true
+                    },
+                    "securityType": "TrustedLaunch"
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_myVMNic_externalid')]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true,
+                        "storageUri": "https://bootdiagsnkfjvk5zdepum.blob.core.windows.net/"
+                    }
+                }
+            }
+        }
+    ]
+}
+
+
+
+delpoy the the above template using deploy button 
+
+fill the basic information 
+resource group
+region
+virtual machine_sample_vm_name
+click create and review
+click review

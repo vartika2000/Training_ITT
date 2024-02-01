@@ -1,0 +1,33 @@
+Host static website in 2 VMs and place them behind application gateway
+
+
+1. create virtual network with 2 subnets one for application gateway and another for virtual machines i.e appgate
+2. create 2 virtual machine I have created windows virtual machine with name vm1 and vm2
+3. Install IIS server on both of the virtual machine. 
+   (to host a sample website of both the virtual machine just run the public ips of the boyh virtual machine)
+4. To place application gateway in front of them follow the steps
+  - resource group i.e appgate1
+  - tier i.e standard
+  - instant count i.e 2
+  - virtual network i.e appgate
+     subnet i.e app-gate-subnet 
+
+  Frontend 
+    - frontend ip address i.e public
+    - public ip addresss i.e test-ip
+  
+  Backend pool
+    - name test
+    - target type virtual machine vm1 and vm2
+  configuration 
+     - rule name i.e testing
+     - listener
+           listener name listen
+           frontend ip public 
+           protocol HTTP
+           port 80
+     - Backend target
+           backend setting name try
+           backend protocol HTTP 
+           backend port 80
+

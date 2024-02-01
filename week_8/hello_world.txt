@@ -1,0 +1,11 @@
+# Create a Jenkins freestyle build job to print 'Hello World'
+
+*item name-demo1
+*select free style 
+*general
+   description - assignment 1
+*source code management - none
+*build steps - execute windows batch command 
+   echo hello world
+apply + save 
+  

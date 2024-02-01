@@ -1,0 +1,16 @@
+Write a dockerfile 
+
+to update the versions of the packages currently installed on the system
+to install CURL.
+
+FROM ubuntu:latest 
+MAINTAINER vartika <vartika.jain@intimetec.com>
+RUN apt-get update
+RUN apt-get install -y curl
+CMD ["echo","hello this docker file is for my assignment"]
+ 
+- to build image 
+docker build -t git .
+
+-to run image 
+docker run -d --name git-update

@@ -1,0 +1,85 @@
+Create a pod with a basic HTML page and service to expose that pod
+
+
+-kubectl create deployment k8-nginx --image=nginx --replicas=2 --port=80   # create deployment
+ 
+-kubctl get pods
+  output:
+    k8-nginx-84c4c5b746-8tr7h           1/1     Running   0          42m
+    k8-nginx-84c4c5b746-rlrgs           1/1     Running   0          42m
+
+-kubectl expose deployment k8-nginx --port=80 --type=LoadBalancer  ## add loadbalancer
+
+-Create a ConfigMap with custom index.html data
+
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: index-html-configmap
+  namespace: default
+data:
+  index.html: |
+    <html>
+    <h1>welcome</h1>
+    <p>custom webpage</p>
+    </html>
+
+- kubectl apply -f index-html-configmap.yml
+
+-Create a Deployment config using index.html config map (nginx.yml)
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nginx-deployment
+  namespace: default
+spec:
+  selector:
+    matchLabels:
+      app: nginx
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: nginx
+    spec:
+      containers:
+        - name: nginx
+          image: nginx:latest
+          ports:
+            - containerPort: 80
+          volumeMounts:
+            - name: nginx-index-file
+              mountPath: /usr/share/nginx/html/
+      volumes:
+        - name: nginx-index-file
+          configMap:
+            name: index-html-configmap
+
+-kubectl apply -f nginx.yml
+-Validate the Change With an Nginx Service(ngnix-service.yml)
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: nginx-service
+  namespace: default
+spec:
+  selector:
+    app: nginx
+  type: NodePort
+  ports:
+    - port: 80
+      nodePort: 32000
+      targetPort: 80
+-kubectl apply -f ngnix-service.yml
+
+-kubectl get services
+
+output:
+k8-nginx         LoadBalancer   10.100.188.223   <pending>     80:30395/TCP   32m
+nginx-service    NodePort       10.103.182.88    <none>        80:32000/TCP   8m42s
+
+
+-To access the webpage
+http://172.18.149.17:32000/

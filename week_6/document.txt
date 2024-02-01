@@ -1,0 +1,49 @@
+Create documentation about the basics of Terraform. Include your learnings about Terraform providers, TF state, lock file, and basic commands.
+
+*Introduction to Terraform
+Terraform is an open-source infrastructure as code (IaC) tool developed by HashiCorp. it is used for provisioning and managing cloud infrastructure. With Terraform, you can treat your infrastructure as code and use version control to manage changes. 
+*Terraform Providers
+Providers are the plugins that Terraform uses to interact with various cloud providers and services. Each provider offers a set of resources and data sources that allow you to create, modify, and delete infrastructure resources on that platform. Some of the popular providers include AWS, Azure, Google Cloud, and more.
+
+To use a provider, you need to declare it in your Terraform configuration file using the provider block. For example, to use the AWS provider:
+
+hcl
+ required_providers {
+    azurerm = {
+      source = "hashicorp/azurerm"
+      version = "3.67.0"
+    }
+  }
+
+
+*Terraform State
+Terraform keeps track of the current state of your infrastructure in a state file (often named terraform.tfstate). The state file is essential because it enables Terraform to know what resources are managed, what configurations were used to create them, and what attributes they have.
+
+Terraform state can be stored locally or remotely. For collaborative projects, it's highly recommended to use a remote state backend (like Terraform Cloud, AWS S3, or Azure Storage) to avoid state conflicts and enable safe collaboration.
+
+The state file contains sensitive information, such as resource IDs and access credentials.
+*Terraform Lock File
+The lock file is an essential feature introduced in Terraform to address potential conflicts when multiple developers or automation tools are working with the same infrastructure configuration. The lock file ensures that the Terraform workspace is frozen to a specific version of the provider plugins and modules.
+
+When you run terraform init, Terraform examines your configuration and generates a lock file called terraform.lock.hcl. This file lists the exact versions of the providers and modules used during initialization. It helps guarantee that subsequent operations use the same versions, preventing unexpected changes between runs.
+
+*Basic Terraform Commands
+Here are some fundamental Terraform commands you'll frequently use:
+
+-terraform init: Initializes a Terraform working directory, downloads providers and modules specified in the configuration.
+
+-terraform plan: Generates an execution plan, which shows what actions Terraform will take to reach the desired state. This command does not make any changes to the infrastructure.
+
+-terraform apply: Applies the changes defined in the configuration, creating or modifying the necessary resources to match the desired state.
+
+-terraform destroy: Destroys all the resources defined in the configuration, effectively removing the infrastructure.
+
+-terraform validate: Validates the syntax of the Terraform configuration files.
+
+-terraform fmt: The terraform fmt command is used to format the Terraform configuration files to ensure consistent code style and formatting.
+
+-import: Associate existing infrastructure with a Terraform resource.
+
+-login:  Obtain and save credentials for a remote host
+
+-logout: Remove locally-stored credentials for a remote host

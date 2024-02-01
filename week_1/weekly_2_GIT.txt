@@ -1,0 +1,30 @@
+                            Merge Conflict 
+
+
+Merge conflicts occur when competing changes are made to the same line of a file, or when one person edits a file and another person deletes the same file.
+
+lets assume there are 2 developers developer A and developer B both of them pull the file from the remote repository and make changes in that file. after making changes developer A pushes the file back to the remote repository from its local repository.Now, developer B wants to push the same file after doing changes from its end he is unable to do so because the file is already changed in the remote repository.
+
+GIT Command to resolve merge conflict
+
+1. git log --merge : The git log --merge command helps to produce the list of commits that are causing the conflict.
+
+2. git diff : The git diff command helps to identify the differences between the states repositories or files.
+
+3. git checkout : The git checkout command is used to undo the changes made to the file, or for changing branches.
+
+4. git reset --mixed : The git reset --mixed command is used to undo changes to the working directory and staging area.
+
+5. git merge --abort : The git merge --abort command helps in exiting the merge process and returning back to the state before the merging began.
+
+6. git reset : The git reset command is used at the time of merge conflict to reset the conflicted files to their original state.
+
+
+
+Here are the following commands used to keep the changes of both developers
+
+1.git status: This command allows you to see which files have conflicts and need to be resolved.
+
+2.git diff: Use this command to view the specific changes causing the conflict.
+
+3.git checkout -- <filename>: If you decide to discard the changes in a conflicted file and keep the version from one of the branches, you can use this command.

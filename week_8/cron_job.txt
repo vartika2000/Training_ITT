@@ -1,0 +1,13 @@
+# Add the build triggers into the Jenkins job (using the cron syntax) and verify the execution
+
+*item name-demo2
+*select free style 
+*general
+   description - assignment 2
+*source code management - none
+*build triggers 
+  build periodically
+    H/1 * * * *
+*build steps - execute windows batch command 
+   echo hello world
+apply + save 

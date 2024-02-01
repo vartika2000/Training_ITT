@@ -1,0 +1,142 @@
+Create docker container for Ubuntu, Apache, Nginx based images using Docker compose file
+
+version: '3'
+services:
+  ubuntu:
+    image: ubuntu:latest
+  
+  apache:
+    image: httpd:latest
+    container_name: my_apache_container
+    ports:
+      - "8080:80"
+
+  ngnix:
+    image: nginx:latest
+    container_name: my_nginx_container
+    ports:
+      - "8081:80"
+
+
+
+*Create custom dockerfile for running a sample html website
+
+FROM nginx:alpine
+
+COPY . /usr/share/nginx/html
+command to build docker image
+docker build -t webpage -f dockerfile2 .
+command to run docker image
+docker run -d -p 8088:80 webpage
+
+
+*Create dockerfile to build and run .NET core application
+
+# Build stage
+FROM mcr.microsoft.com/dotnet/sdk:7.0 AS build
+WORKDIR /app
+
+COPY *.csproj ./
+RUN dotnet restore
+
+COPY . ./
+RUN dotnet publish -c Release -o out
+
+# Runtime stage
+FROM mcr.microsoft.com/dotnet/aspnet:7.0 As runtime
+WORKDIR /app
+COPY --from=build /app/out .
+ENTRYPOINT ["dotnet", "WebApplication2.dll"]
+
+docker build command to build image 
+docker build -t dot_net -f dockerfile4 .
+
+
+*Deploy a sample web application that uses a database. Application & Database should be hosted in separate containers, and the app should be able to communicate with the DB
+
+app.py
+
+# app.py
+from flask import Flask, jsonify
+import psycopg2
+
+app = Flask(__name__)
+
+# Database connection configuration
+db_config = {
+    "dbname": "sampledb",
+    "user": "sampleuser",
+    "password": "samplepassword",
+    "host": "db",  # This will be the container name of the database service
+}
+
+# Route to test the database connection
+@app.route('/')
+def test_db_connection():
+    try:
+        connection = psycopg2.connect(**db_config)
+        cursor = connection.cursor()
+        cursor.execute("SELECT 'Connected to DB' as result;")
+        result = cursor.fetchone()[0]
+        cursor.close()
+        connection.close()
+        return jsonify({"message": result})
+    except Exception as e:
+        return jsonify({"message": f"Failed to connect to DB: {str(e)}"}), 500
+
+if __name__ == '__main__':
+    app.run(host='0.0.0.0', port=5000)
+
+
+
+requirements.txt
+
+
+flask
+psycopg2
+
+docker-compose.yml
+
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "5000:5000"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: sampledb
+      POSTGRES_USER: sampleuser
+      POSTGRES_PASSWORD: samplepassword
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+
+volumes:
+  pgdata:
+
+
+dockerfile
+
+# Dockerfile
+FROM python:3.9
+
+WORKDIR /app
+
+COPY requirements.txt .
+
+RUN pip install --no-cache-dir -r requirements.txt
+
+COPY . .
+
+CMD ["python", "app.py"]
+
+
+
+docker-compose up -d

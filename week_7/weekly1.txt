@@ -1,0 +1,62 @@
+Use the ACR image created for the .Net application and deploy it on minikube. The Application in the pod should be accessible on the browser.
+
+-to give the tag to the image 
+docker tag dotnet-minikube-demo netacr.azurecr.io/dotnet-minikube-demo:new
+
+-push the image to ACR
+docker push netacr.azurecr.io/dotnet-minikube-demo:new
+
+-create a secret
+kubectl create secret docker-registry my-acr-secret --docker-server=netacr.azurecr.io --docker-username=netacr --docker-password=PzpKiVf+O+xXCxwCgf890vRagGN5DaaCZdEJE1bmaq+ACRAjcDXd --docker-email=netacr@azurecr.io
+
+-deployment.yml
+
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dotnet-minikube-acr-demo
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: dotnet-minikube-acr-demo
+  template:
+    metadata:
+      labels:
+        app: dotnet-minikube-acr-demo
+    spec:
+      containers:
+        - name: dotnet-minikube-acr-demo
+          image: netacr.azurecr.io/dotnet-minikube-demo:new
+          ports:
+            - containerPort: 80
+      imagePullSecrets:
+        - name: my-acr-secret
+
+-apply deployment.yml
+ kubectl apply -f deployment.yml
+
+-service.yml
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: dotnet-minikube-acr-demo
+spec:
+  selector:
+    app: dotnet-minikube-acr-demo
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: NodePort
+
+-apply service.yml
+ kubectl apply -f service.yml
+
+-minikube ip
+  172.18.149.17
+ 
+- to access the .net app 
+ http://172.18.149.17:30085/
+

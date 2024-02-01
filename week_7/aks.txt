@@ -1,0 +1,22 @@
+Create a public AKS cluster. Configure your local system to access and manage the cluster
+
+
+resource group - cluster
+cluster present configuration - standard($$)
+kubernetes cluster name - test
+region - east us
+availabilty zone - zone 1,2,3
+AKS pricing tier - free
+kubernetes version- 1.25.11
+automatic upgrade- enabled with patch
+
+
+-to connect to the local system
+
+-az account set --subscription ce305bc3-459e-455a-bf2f-c5439f4f2e85
+-az aks get-credentials --resource-group cluster --name test
+   output: Merged "test" as current context in C:\Users\Vartika.Jain\.kube\config
+-kubectl get node
+   output: 
+    NAME                                STATUS   ROLES   AGE   VERSION
+    aks-agentpool-26046824-vmss000000   Ready    agent   31m   v1.25.11
