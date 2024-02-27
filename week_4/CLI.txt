@@ -1,7 +1,0 @@
-List VMs in the account using Azure CLI
-
-az vm list
-
-Access Secret stored in Key Vault using Azure CLI
-
-az keyvault secret show --name "keep" --vault-name "tryvault1" --query "value"

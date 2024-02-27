@@ -1,9 +1,0 @@
-      Assignment 5 
-
-Write git commands to add all files in staging area, commit to move changes from the staging area and push those changes to the main repository. 
-
-*firstly use git init for initilization
-*By using add . Command we can add the files in the staging area 
-*for commit use git commit -m " "
-*for push use git push origin master.
-*finally, my file pushed to github
